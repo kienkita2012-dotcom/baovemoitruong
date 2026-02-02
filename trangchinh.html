@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trang chính - Bảo vệ môi trường</title>
+    <link rel="icon" type="image/png" href="logobaovemoitruong.png" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        background: #f0fdf4;
+        color: #064e3b;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      header {
+        background: linear-gradient(135deg, #22c55e, #15803d);
+        color: white;
+        padding: 35px 20px;
+        text-align: center;
+      }
+
+      header h1 {
+        font-size: 36px;
+      }
+
+      header p {
+        margin-top: 8px;
+        font-size: 18px;
+      }
+
+      .lang-switch {
+        margin-top: 15px;
+      }
+
+      .lang-switch button {
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: none;
+        margin: 0 5px;
+        cursor: pointer;
+        font-weight: bold;
+        background: #ecfdf5;
+        color: #065f46;
+      }
+
+      /* ===== NÚT TRỞ VỀ TRANG CHỦ ===== */
+      .back-home {
+        max-width: 1200px;
+        margin: 20px auto 0;
+        padding: 0 20px;
+      }
+
+      .back-home a {
+        display: inline-block;
+        padding: 10px 18px;
+        background: #ecfdf5;
+        color: #065f46;
+        border-radius: 999px;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        transition: 0.3s;
+      }
+
+      .back-home a:hover {
+        background: #22c55e;
+        color: white;
+        transform: translateX(-4px);
+      }
+
+      main {
+        flex: 1;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 40px auto;
+        display: flex;
+        gap: 30px;
+        padding: 0 20px;
+      }
+
+      .menu {
+        width: 28%;
+        background: white;
+        border-radius: 18px;
+        padding: 20px;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+      }
+
+      .menu button {
+        width: 100%;
+        padding: 14px;
+        margin-bottom: 10px;
+        border: none;
+        border-radius: 12px;
+        background: #ecfdf5;
+        color: #065f46;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        text-align: left;
+      }
+
+      .menu button.active {
+        background: #22c55e;
+        color: white;
+      }
+
+      .content {
+        width: 72%;
+        display: flex;
+        gap: 25px;
+        background: white;
+        border-radius: 18px;
+        padding: 30px;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+      }
+
+      .text {
+        width: 65%;
+      }
+
+      .image {
+        width: 35%;
+        border-radius: 16px;
+        overflow: hidden;
+      }
+
+      .image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .content-section {
+        display: none;
+      }
+
+      .content-section.active {
+        display: block;
+      }
+
+      h2 {
+        color: #15803d;
+        margin-bottom: 12px;
+      }
+
+      p,
+      li {
+        font-size: 17px;
+        line-height: 1.7;
+      }
+
+      ul {
+        margin-left: 20px;
+      }
+
+      /* ===== FOOTER ===== */
+      .site-footer {
+        background: #15803d;
+        color: white;
+        margin-top: auto;
+      }
+
+      .footer-inner {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+        text-align: center;
+      }
+
+      .footer-sub {
+        margin-top: 6px;
+        font-size: 14px;
+        opacity: 0.85;
+      }
+
+      /* ===== MOBILE ===== */
+      @media (max-width: 768px) {
+        .container {
+          flex-direction: column;
+        }
+
+        .menu {
+          display: none;
+        }
+
+        .content {
+          width: 100%;
+          flex-direction: column;
+        }
+
+        .text,
+        .image {
+          width: 100%;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .footer-inner {
+          padding: 16px 12px;
+        }
+
+        .footer-inner p {
+          font-size: 14px;
+          line-height: 1.6;
+        }
+
+        .footer-sub {
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>🌱 BẢO VỆ MÔI TRƯỜNG</h1>
+      <p
+        data-vi="Hiểu đúng – Hành động đúng – Vì tương lai"
+        data-en="Understand – Act – For the Future"
+      >
+        Hiểu đúng – Hành động đúng – Vì tương lai
+      </p>
+
+      <div class="lang-switch">
+        <button onclick="setLang('vi')">🇻🇳 VI</button>
+        <button onclick="setLang('en')">🇬🇧 EN</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <aside class="menu">
+        <button class="active" onclick="showContent(0)">
+          🌍 Môi trường là gì?
+        </button>
+        <button onclick="showContent(1)">⚠️ Thực trạng</button>
+        <button onclick="showContent(2)">💥 Hậu quả</button>
+        <button onclick="showContent(3)">🌱 Vì sao cần bảo vệ?</button>
+        <button onclick="showContent(4)">🤝 Chúng ta cần làm gì?</button>
+        <button onclick="showContent(5)">🏆 Kết luận – Kêu gọi</button>
+        <div class="back-home">
+          <a href="trangchu.html">⬅️ Trở về trang chủ</a>
+        </div>
+      </aside>
+
+      <section class="content">
+        <div class="text">
+          <div class="content-section active">
+            <h2>🌍 Môi trường là gì?</h2>
+            <p>
+              Môi trường là tất cả những yếu tố tự nhiên và nhân tạo bao quanh
+              con người.
+            </p>
+          </div>
+
+          <div class="content-section">
+            <h2>⚠️ Thực trạng môi trường</h2>
+            <ul>
+              <li>Ô nhiễm không khí</li>
+              <li>Ô nhiễm nguồn nước</li>
+              <li>Rác thải nhựa</li>
+            </ul>
+          </div>
+
+          <div class="content-section">
+            <h2>💥 Hậu quả</h2>
+            <ul>
+              <li>Ảnh hưởng sức khỏe</li>
+              <li>Mất đa dạng sinh học</li>
+              <li>Biến đổi khí hậu</li>
+            </ul>
+          </div>
+
+          <div class="content-section">
+            <h2>🌱 Vì sao cần bảo vệ?</h2>
+            <p>Bảo vệ môi trường là bảo vệ chính chúng ta.</p>
+          </div>
+
+          <div class="content-section">
+            <h2>🤝 Chúng ta cần làm gì?</h2>
+            <ul>
+              <li>Không xả rác</li>
+              <li>Tiết kiệm tài nguyên</li>
+              <li>Lan tỏa ý thức</li>
+            </ul>
+          </div>
+
+          <div class="content-section">
+            <h2>🏆 Kết luận – Kêu gọi</h2>
+            <p>Mỗi hành động nhỏ đều tạo nên tương lai xanh.</p>
+          </div>
+        </div>
+
+        <div class="image">
+          <img id="img" src="images/environment.jpg" alt="Environment" />
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p>© 2026 | Website bảo vệ môi trường 🌱</p>
+        <p class="footer-sub">Chung tay vì một Trái Đất xanh – sạch – đẹp</p>
+      </div>
+    </footer>
+
+    <script>
+      const images = [
+        "images/environment.jpg",
+        "images/pollution.jpg",
+        "images/consequence.jpg",
+        "images/protect.jpg",
+        "images/action.jpg",
+        "images/conclusion.jpg",
+      ];
+
+      function showContent(i) {
+        document
+          .querySelectorAll(".menu button")
+          .forEach((b) => b.classList.remove("active"));
+        document
+          .querySelectorAll(".content-section")
+          .forEach((c) => c.classList.remove("active"));
+        document.querySelectorAll(".menu button")[i].classList.add("active");
+        document
+          .querySelectorAll(".content-section")
+          [i].classList.add("active");
+        document.getElementById("img").src = images[i];
+      }
+
+      function setLang(lang) {
+        document.querySelectorAll("[data-vi]").forEach((el) => {
+          el.innerText = el.getAttribute("data-" + lang);
+        });
+      }
+    </script>
+  </body>
+</html>

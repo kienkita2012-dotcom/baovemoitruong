@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bảo vệ môi trường</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        background-color: #f0fdf4;
+        color: #064e3b;
+        overflow-x: hidden;
+      }
+
+      /* HEADER */
+      header {
+        background: linear-gradient(135deg, #22c55e, #15803d);
+        color: white;
+        padding: 20px;
+        border-radius: 0 0 20px 20px;
+        animation: slideDown 0.8s ease-out;
+      }
+
+      .header-container {
+        max-width: 1100px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 22px;
+        font-weight: bold;
+      }
+
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        color: #15803d;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+      }
+
+      nav ul {
+        list-style: none;
+        display: flex;
+        gap: 20px;
+      }
+
+      nav a {
+        color: white;
+        text-decoration: none;
+        font-weight: bold;
+        position: relative;
+      }
+
+      nav a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -5px;
+        width: 0;
+        height: 2px;
+        background: #a7f3d0;
+        transition: width 0.3s ease;
+      }
+
+      nav a:hover::after {
+        width: 100%;
+      }
+
+      /* LANGUAGE SWITCH */
+      .lang-switch {
+        display: flex;
+        gap: 8px;
+      }
+
+      .lang-switch button {
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+        background: #ecfdf5;
+        color: #065f46;
+        transition: all 0.3s ease;
+      }
+
+      .lang-switch button:hover {
+        background: #a7f3d0;
+        transform: scale(1.05);
+      }
+
+      /* MAIN */
+      main {
+        flex: 1;
+        max-width: 1100px;
+        margin: auto;
+        padding: 40px 20px;
+        text-align: center;
+      }
+
+      /* WAVE TITLE */
+      .wave-title {
+        font-size: 38px;
+        font-weight: bold;
+        margin-bottom: 25px;
+        background: linear-gradient(90deg, #15803d, #22c55e, #4ade80);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: waveText 4s ease-in-out infinite;
+      }
+
+      @keyframes waveText {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      main p {
+        max-width: 750px;
+        margin: auto;
+        line-height: 1.7;
+        font-size: 18px;
+      }
+
+      .cards {
+        margin-top: 40px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+
+      .card {
+        background-color: white;
+        padding: 20px;
+        border-radius: 16px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        transition:
+          transform 0.4s ease,
+          box-shadow 0.4s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+      }
+
+      .card h3 {
+        color: #15803d;
+        margin-bottom: 10px;
+      }
+
+      /* FOOTER */
+      footer {
+        background-color: #15803d;
+        color: white;
+        text-align: center;
+        padding: 20px;
+        border-radius: 20px 20px 0 0;
+        position: relative;
+        overflow: hidden;
+      }
+
+      footer::before {
+        content: "";
+        position: absolute;
+        top: -30px;
+        left: 0;
+        width: 200%;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 50%;
+        animation: wave 6s linear infinite;
+      }
+
+      /* SCROLL REVEAL */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s ease;
+      }
+
+      .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* LEAF */
+      .leaf {
+        position: fixed;
+        top: -50px;
+        font-size: 24px;
+        animation: fall linear infinite;
+        pointer-events: none;
+        z-index: 999;
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(110vh) rotate(360deg);
+        }
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes wave {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header-container {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        nav ul {
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .cards {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <div class="logo-icon">🌱</div>
+          <span data-vi="Bảo vệ môi trường" data-en="Environmental Protection"
+            >Bảo vệ môi trường</span
+          >
+        </div>
+
+        <nav>
+          <ul>
+            <li>
+              <a href="trangchinh.html" data-vi="Trang chủ" data-en="Home"
+                >Trang chính</a
+              >
+            </li>
+            <li>
+              <a href="#" data-vi="Giới thiệu" data-en="About">Giới thiệu</a>
+            </li>
+            <li>
+              <a href="#" data-vi="Hành động xanh" data-en="Green Actions"
+                >Hành động xanh</a
+              >
+            </li>
+            <li>
+              <a href="contact.html" data-vi="Liên hệ" data-en="Contact"
+                >Liên hệ</a
+              >
+            </li>
+          </ul>
+        </nav>
+
+        <div class="lang-switch">
+          <button onclick="setLang('vi')">VI</button>
+          <button onclick="setLang('en')">EN</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="reveal">
+      <h1
+        class="wave-title"
+        data-vi="Chung tay bảo vệ môi trường"
+        data-en="Join Hands to Protect the Environment"
+      >
+        Chung tay bảo vệ môi trường
+      </h1>
+
+      <p
+        data-vi="Môi trường là ngôi nhà chung của chúng ta. Hãy bắt đầu từ những hành động nhỏ mỗi ngày để giữ gìn Trái Đất xanh – sạch – đẹp cho thế hệ tương lai."
+        data-en="The environment is our common home. We should start with small daily actions to keep the Earth green, clean, and beautiful for future generations."
+      >
+        Môi trường là ngôi nhà chung của chúng ta...
+      </p>
+
+      <div class="cards reveal">
+        <div class="card">
+          <h3 data-vi="🌿 Giảm rác thải" data-en="🌿 Reduce Waste">
+            🌿 Giảm rác thải
+          </h3>
+          <p
+            data-vi="Hạn chế sử dụng nhựa dùng một lần, tái chế và tái sử dụng."
+            data-en="Limit single-use plastics, recycle, and reuse materials."
+          ></p>
+        </div>
+
+        <div class="card">
+          <h3 data-vi="💧 Tiết kiệm tài nguyên" data-en="💧 Save Resources">
+            💧 Tiết kiệm tài nguyên
+          </h3>
+          <p
+            data-vi="Tiết kiệm nước, điện và sử dụng năng lượng hợp lý."
+            data-en="Save water and electricity, and use energy wisely."
+          ></p>
+        </div>
+
+        <div class="card">
+          <h3 data-vi="🌍 Bảo vệ thiên nhiên" data-en="🌍 Protect Nature">
+            🌍 Bảo vệ thiên nhiên
+          </h3>
+          <p
+            data-vi="Trồng cây xanh, bảo vệ rừng và đa dạng sinh học."
+            data-en="Plant trees, protect forests, and preserve biodiversity."
+          ></p>
+        </div>
+      </div>
+    </main>
+
+    <footer>© 2026 | Environmental Protection Website 🌱</footer>
+
+    <script>
+      /* Scroll reveal */
+      const reveals = document.querySelectorAll(".reveal");
+      const revealOnScroll = () => {
+        reveals.forEach((el) => {
+          const windowHeight = window.innerHeight;
+          const elementTop = el.getBoundingClientRect().top;
+          if (elementTop < windowHeight - 120) {
+            el.classList.add("active");
+          }
+        });
+      };
+      window.addEventListener("scroll", revealOnScroll);
+      revealOnScroll();
+
+      /* Leaf falling */
+      function createLeaf() {
+        const leaf = document.createElement("div");
+        leaf.classList.add("leaf");
+        leaf.innerHTML = "🍃";
+        leaf.style.left = Math.random() * 100 + "vw";
+        leaf.style.animationDuration = 5 + Math.random() * 5 + "s";
+        leaf.style.opacity = Math.random();
+        document.body.appendChild(leaf);
+        setTimeout(() => leaf.remove(), 10000);
+      }
+      setInterval(createLeaf, 1200);
+
+      /* Language switch + lưu ngôn ngữ */
+      function setLang(lang) {
+        localStorage.setItem("lang", lang);
+
+        document.querySelectorAll("[data-vi]").forEach((el) => {
+          el.innerText = el.getAttribute("data-" + lang);
+        });
+      }
+
+      /* Tự động áp dụng khi tải trang */
+      window.addEventListener("DOMContentLoaded", () => {
+        const savedLang = localStorage.getItem("lang") || "vi";
+        setLang(savedLang);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Website Bảo vệ Môi trường</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        color: #064e3b;
+        overflow-x: hidden;
+      }
+
+      /* ===== BACKGROUND ===== */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          linear-gradient(rgba(240, 253, 244, 0.96), rgba(240, 253, 244, 0.96)),
+          url("images/forest-bg.jpg");
+        background-size: cover;
+        z-index: -1;
+      }
+
+      /* ===== HEADER ===== */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        background: linear-gradient(135deg, #22c55e, #15803d);
+        border-radius: 0 0 26px 26px;
+        transition: 0.3s;
+      }
+      header.shrink h1 {
+        font-size: 18px;
+      }
+
+      .header-row {
+        max-width: 1200px;
+        margin: auto;
+        padding: 14px 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+      }
+
+      header h1 {
+        color: #fff;
+        font-size: 24px;
+      }
+      header p {
+        color: #ecfdf5;
+        font-size: 14px;
+      }
+
+      .menu {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .menu a {
+        color: #fff;
+        text-decoration: none;
+        padding: 7px 16px;
+        border-radius: 20px;
+        font-weight: bold;
+        background: rgba(255, 255, 255, 0.2);
+        border: 2px solid transparent;
+        transition: 0.25s;
+      }
+      .menu a.active {
+        background: rgba(255, 255, 255, 0.45);
+        border-color: #ecfdf5;
+        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+      }
+
+      .lang-switch button {
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        background: #ecfdf5;
+        color: #065f46;
+      }
+
+      /* ===== MAIN ===== */
+      main {
+        flex: 1;
+        max-width: 1200px;
+        margin: auto;
+        width: 100%;
+        padding: 32px 14px 80px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 26px;
+      }
+
+      section {
+        background: #fff;
+        padding: 26px;
+        border-radius: 22px;
+        box-shadow: 0 14px 36px rgba(0, 0, 0, 0.15);
+      }
+
+      /* ===== TITLE ===== */
+      section h2 {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #15803d;
+        font-size: 20px;
+        margin-bottom: 12px;
+        padding: 6px 14px;
+        background: #dcfce7;
+        border-radius: 20px;
+      }
+
+      section img {
+        width: 100%;
+        border-radius: 16px;
+        margin: 14px 0;
+      }
+
+      section p,
+      li {
+        font-size: 15px;
+        line-height: 1.8;
+        margin-bottom: 10px;
+      }
+      ul {
+        padding-left: 18px;
+      }
+
+      .detail-btn {
+        margin-top: 12px;
+        padding: 10px 22px;
+        border-radius: 22px;
+        border: none;
+        background: #22c55e;
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.25s;
+      }
+      .detail-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+      }
+
+      /* ===== MODAL ===== */
+      .overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(6px);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 2000;
+      }
+      .overlay.show {
+        display: flex;
+      }
+
+      .modal {
+        background: #ecfdf5;
+        max-width: 650px;
+        width: 92%;
+        border-radius: 22px;
+        padding: 26px;
+        position: relative;
+        animation: pop 0.25s ease;
+      }
+      @keyframes pop {
+        from {
+          transform: scale(0.9);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      .modal h3 {
+        color: #15803d;
+        margin-bottom: 12px;
+      }
+      .modal p {
+        line-height: 1.8;
+      }
+
+      .close {
+        position: absolute;
+        top: 14px;
+        right: 16px;
+        font-size: 22px;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      /* ===== FOOTER ===== */
+      footer {
+        background: #15803d;
+        color: #fff;
+        text-align: center;
+        padding: 22px;
+        border-radius: 26px 26px 0 0;
+        margin-top: auto;
+      }
+
+      /* ===== LEAF ===== */
+      .leaf {
+        position: fixed;
+        top: -40px;
+        pointer-events: none;
+        animation: leafFall linear forwards;
+      }
+      @keyframes leafFall {
+        to {
+          transform: translateY(110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* ===== MOBILE ===== */
+      @media (max-width: 900px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        header h1 {
+          font-size: 20px;
+        }
+      }
+      /* ===== GREEN MESSAGE ===== */
+      .green-message {
+        display: flex;
+        gap: 30px;
+        padding: 36px;
+        margin-top: 50px;
+        background: linear-gradient(135deg, #dcfce7, #ecfdf5);
+        border-radius: 26px;
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+        align-items: center;
+      }
+
+      .green-left {
+        flex: 1.2;
+      }
+
+      .green-left h3 {
+        font-size: 22px;
+        color: #15803d;
+        margin-bottom: 12px;
+      }
+
+      .green-left p {
+        font-size: 15px;
+        line-height: 1.8;
+        color: #065f46;
+      }
+
+      .green-stats {
+        flex: 1;
+        display: flex;
+        gap: 16px;
+      }
+
+      .stat-box {
+        flex: 1;
+        background: #fff;
+        border-radius: 18px;
+        padding: 20px 14px;
+        text-align: center;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+      }
+
+      .stat-box:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 32px rgba(0, 0, 0, 0.18);
+      }
+
+      .stat-box strong {
+        display: block;
+        font-size: 24px;
+        color: #16a34a;
+        margin-bottom: 6px;
+      }
+
+      .stat-box span {
+        font-size: 13px;
+        color: #065f46;
+        line-height: 1.5;
+      }
+
+      /* ===== SCROLL REVEAL ===== */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: 0.8s ease;
+      }
+      .reveal.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ===== MOBILE ===== */
+      @media (max-width: 900px) {
+        .green-message {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .green-stats {
+          width: 100%;
+        }
+      }
+      .back-home {
+        text-align: center;
+        margin: 40px 0 10px;
+      }
+
+      .back-home button {
+        padding: 14px 30px;
+        border-radius: 30px;
+        border: none;
+        background: linear-gradient(135deg, #22c55e, #15803d);
+        color: #fff;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 10px 26px rgba(0, 0, 0, 0.25);
+        transition:
+          transform 0.3s,
+          box-shadow 0.3s;
+      }
+
+      .back-home button:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 34px rgba(0, 0, 0, 0.35);
+      }
+    </style>
+  </head>
+
+  <body>
+    <header id="header">
+      <div class="header-row">
+        <div>
+          <h1
+            data-vi="Website Bảo vệ Môi trường"
+            data-en="Environmental Protection Website"
+          ></h1>
+          <p
+            data-vi="Lan tỏa lối sống xanh vì Trái Đất"
+            data-en="Spreading green living for Earth"
+          ></p>
+        </div>
+
+        <div class="lang-switch">
+          <button onclick="setLang('vi')">VI</button>
+          <button onclick="setLang('en')">EN</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="grid">
+        <!-- ===== MỤC 1 ===== -->
+        <section id="about">
+          <h2>🌍 <span data-vi="Giới thiệu" data-en="Introduction"></span></h2>
+          <img src="images/intro.jpg" alt="" />
+          <p
+            data-vi="Website được xây dựng nhằm cung cấp kiến thức, hình ảnh và thông tin về các vấn đề môi trường đang diễn ra trên toàn cầu."
+            data-en="This website provides knowledge, images and information about current global environmental issues."
+          ></p>
+          <p
+            data-vi="Thông qua nội dung trực quan, học sinh có thể hiểu rõ hơn về vai trò và trách nhiệm của con người trong việc bảo vệ môi trường sống."
+            data-en="Through visual content, students can better understand human responsibility in protecting the environment."
+          ></p>
+          <button
+            class="detail-btn"
+            onclick="openModal('about')"
+            data-vi="Xem chi tiết"
+            data-en="View details"
+          ></button>
+        </section>
+
+        <section id="goal">
+          <h2>🎯 <span data-vi="Mục tiêu" data-en="Goals"></span></h2>
+          <img src="images/goal.jpg" alt="" />
+          <ul>
+            <li
+              data-vi="Nâng cao ý thức cộng đồng về bảo vệ môi trường."
+              data-en="Raise community awareness of environmental protection."
+            ></li>
+            <li
+              data-vi="Hình thành thói quen sống xanh và tiết kiệm tài nguyên."
+              data-en="Build green living habits and save resources."
+            ></li>
+            <li
+              data-vi="Khuyến khích học sinh tham gia các hoạt động thực tế."
+              data-en="Encourage students to join practical activities."
+            ></li>
+          </ul>
+          <button
+            class="detail-btn"
+            onclick="openModal('goal')"
+            data-vi="Xem chi tiết"
+            data-en="View details"
+          ></button>
+        </section>
+
+        <section id="reason">
+          <h2>⚠️ <span data-vi="Lý do" data-en="Reasons"></span></h2>
+          <img src="images/reason.jpg" alt="" />
+          <p
+            data-vi="Ô nhiễm môi trường và biến đổi khí hậu đang gây ảnh hưởng nghiêm trọng đến sức khỏe con người."
+            data-en="Environmental pollution and climate change seriously affect human health."
+          ></p>
+          <p
+            data-vi="Việc giáo dục ý thức bảo vệ môi trường cần được thực hiện từ sớm."
+            data-en="Environmental awareness education should start early."
+          ></p>
+          <button
+            class="detail-btn"
+            onclick="openModal('reason')"
+            data-vi="Xem chi tiết"
+            data-en="View details"
+          ></button>
+        </section>
+      </div>
+      <section class="green-message reveal">
+        <div class="green-left">
+          <h3 data-vi="🌱 Thông điệp xanh" data-en="🌱 Green Message"></h3>
+          <p
+            data-vi="Mỗi hành động nhỏ hôm nay sẽ tạo nên một Trái Đất xanh hơn cho ngày mai. Bảo vệ môi trường không phải là việc của riêng ai mà là trách nhiệm chung của toàn xã hội."
+            data-en="Every small action today helps create a greener Earth tomorrow. Environmental protection is a shared responsibility of the whole society."
+          ></p>
+        </div>
+
+        <div class="green-stats">
+          <div class="stat-box">
+            <strong>8+</strong>
+            <span
+              data-vi="triệu tấn rác nhựa mỗi năm"
+              data-en="million tons of plastic each year"
+            ></span>
+          </div>
+
+          <div class="stat-box">
+            <strong>30%</strong>
+            <span
+              data-vi="rác có thể tái chế"
+              data-en="waste can be recycled"
+            ></span>
+          </div>
+
+          <div class="stat-box">
+            <strong>1 cây</strong>
+            <span
+              data-vi="hấp thụ ~20kg CO₂ / năm"
+              data-en="absorbs ~20kg CO₂ / year"
+            ></span>
+          </div>
+        </div>
+      </section>
+      <div class="back-home">
+        <button onclick="location.href = 'index.html'">
+          🌿 Trở về trang chính
+        </button>
+      </div>
+    </main>
+
+    <footer>© 2026 | Environmental Protection 🌱</footer>
+
+    <!-- MODAL -->
+    <div class="overlay" id="overlay">
+      <div class="modal">
+        <span class="close" onclick="closeModal()">✖</span>
+        <h3 id="modalTitle"></h3>
+        <p id="modalContent"></p>
+      </div>
+    </div>
+
+    <script>
+      /* HEADER SHRINK */
+      addEventListener("scroll", () => {
+        header.classList.toggle("shrink", scrollY > 80);
+      });
+
+      /* MENU ACTIVE BY SCROLL */
+      const sections = document.querySelectorAll("section");
+      const links = document.querySelectorAll(".menu a");
+      const io = new IntersectionObserver(
+        (e) => {
+          e.forEach((x) => {
+            if (x.isIntersecting) {
+              links.forEach((l) => {
+                l.classList.toggle(
+                  "active",
+                  l.getAttribute("href").slice(1) === x.target.id,
+                );
+              });
+            }
+          });
+        },
+        { threshold: 0.6 },
+      );
+      sections.forEach((s) => io.observe(s));
+
+      /* MODAL DATA – GIỮ NGUYÊN NỘI DUNG */
+      const modalData = {
+        about: {
+          vi: "Website là kênh học tập trực tuyến giúp học sinh tiếp cận kiến thức môi trường một cách sinh động. Đối tượng mà website hướng đến là đa dạng, không chỉ dừng lại ở học sinh hay người trong nước mà còn mong muốn hướng đến người nước ngoài để tuyên truyền về việc bảo vệ môi trường.",
+          en: "The website is an online learning channel for environmental education. Its target audience is diverse, not limited to students or locals, but also aims to reach foreigners to promote environmental protection.",
+        },
+        goal: {
+          vi: "Website hướng đến việc nâng cao nhận thức cộng đồng, lan tỏa lối sống xanh, tiết kiệm tài nguyên và kêu gọi hành động thiết thực nhằm bảo vệ môi trường sống bền vững cho hiện tại và tương lai.",
+          en: "The website aims to raise awareness, spread green living, conserve resources and encourage practical actions for a sustainable environment.",
+        },
+        reason: {
+          vi: "Nếu không hành động kịp thời, ô nhiễm môi trường và biến đổi khí hậu sẽ gây hậu quả nghiêm trọng đến sức khỏe con người, hệ sinh thái và sự phát triển bền vững của xã hội.",
+          en: "Without timely action, pollution and climate change will seriously impact human health, ecosystems and sustainable development.",
+        },
+      };
+
+      let currentLang = "vi";
+      function openModal(k) {
+        modalTitle.innerText = document.querySelector(
+          "#" + k + " h2",
+        ).innerText;
+        modalContent.innerText = modalData[k][currentLang];
+        overlay.classList.add("show");
+      }
+      function closeModal() {
+        overlay.classList.remove("show");
+      }
+
+      /* LANGUAGE */
+      function setLang(l) {
+        currentLang = l;
+        localStorage.setItem("lang", l);
+        document.querySelectorAll("[data-vi]").forEach((el) => {
+          el.innerText = el.getAttribute("data-" + l);
+        });
+      }
+      setLang(localStorage.getItem("lang") || "vi");
+
+      /* FEWER LEAVES */
+      setInterval(() => {
+        const leaf = document.createElement("div");
+        leaf.className = "leaf";
+        leaf.textContent = "🍃";
+        leaf.style.left = Math.random() * innerWidth + "px";
+        leaf.style.fontSize = 14 + Math.random() * 12 + "px";
+        leaf.style.animationDuration = 9 + Math.random() * 6 + "s";
+        document.body.appendChild(leaf);
+        setTimeout(() => leaf.remove(), 14000);
+      }, 2600);
+      /* SCROLL REVEAL */
+      const reveals = document.querySelectorAll(".reveal");
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("show");
+            }
+          });
+        },
+        { threshold: 0.25 },
+      );
+      reveals.forEach((el) => revealObserver.observe(el));
+    </script>
+  </body>
+</html>

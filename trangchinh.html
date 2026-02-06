@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Trang chính - Bảo vệ môi trường</title>
-    <link rel="icon" type="image/png" href="logobaovemoitruong.png" />
+    <title>Bảo vệ môi trường</title>
 
     <style>
       * {
@@ -22,66 +21,72 @@
         flex-direction: column;
       }
 
+      /* ===== HEADER ===== */
       header {
         background: linear-gradient(135deg, #22c55e, #15803d);
         color: white;
-        padding: 35px 20px;
         text-align: center;
+        padding: 30px 16px;
       }
-
       header h1 {
-        font-size: 36px;
+        font-size: 32px;
       }
-
       header p {
-        margin-top: 8px;
-        font-size: 18px;
+        margin-top: 6px;
+        font-size: 17px;
       }
 
       .lang-switch {
-        margin-top: 15px;
+        margin-top: 12px;
       }
-
       .lang-switch button {
         padding: 6px 14px;
-        border-radius: 20px;
         border: none;
-        margin: 0 5px;
-        cursor: pointer;
-        font-weight: bold;
-        background: #ecfdf5;
-        color: #065f46;
-      }
-
-      /* ===== NÚT TRỞ VỀ TRANG CHỦ ===== */
-      .back-home {
-        max-width: 1200px;
-        margin: 20px auto 0;
-        padding: 0 20px;
-      }
-
-      .back-home a {
-        display: inline-block;
-        padding: 10px 18px;
-        background: #ecfdf5;
-        color: #065f46;
         border-radius: 999px;
+        margin: 0 4px;
         font-weight: bold;
-        text-decoration: none;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-        transition: 0.3s;
+        cursor: pointer;
+        background: #ecfdf5;
+        color: #065f46;
       }
 
-      .back-home a:hover {
-        background: #22c55e;
-        color: white;
-        transform: translateX(-4px);
+      /* ===== MOBILE MENU ===== */
+      .mobile-menu {
+        display: none;
       }
 
+      @media (max-width: 768px) {
+        .mobile-menu {
+          display: flex;
+          gap: 10px;
+          overflow-x: auto;
+          padding: 12px;
+          margin: 12px;
+          background: white;
+          border-radius: 16px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .mobile-menu button {
+          flex-shrink: 0;
+          padding: 10px 14px;
+          border-radius: 999px;
+          border: none;
+          background: #ecfdf5;
+          color: #065f46;
+          font-weight: bold;
+          cursor: pointer;
+          white-space: nowrap;
+        }
+        .mobile-menu button.active {
+          background: #22c55e;
+          color: white;
+        }
+      }
+
+      /* ===== MAIN ===== */
       main {
         flex: 1;
       }
-
       .container {
         max-width: 1200px;
         margin: 40px auto;
@@ -97,7 +102,6 @@
         padding: 20px;
         box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
       }
-
       .menu button {
         width: 100%;
         padding: 14px;
@@ -111,7 +115,6 @@
         cursor: pointer;
         text-align: left;
       }
-
       .menu button.active {
         background: #22c55e;
         color: white;
@@ -120,105 +123,97 @@
       .content {
         width: 72%;
         display: flex;
-        gap: 25px;
+        gap: 24px;
         background: white;
         border-radius: 18px;
-        padding: 30px;
+        padding: 28px;
         box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+      }
+
+      /* ===== SLIDE ANIMATION ===== */
+      .content-section {
+        display: none;
+        opacity: 0;
+        transform: translateX(60px);
+        transition: all 0.5s ease;
+      }
+      .content-section.active {
+        display: block;
+        opacity: 1;
+        transform: translateX(0);
       }
 
       .text {
         width: 65%;
       }
-
       .image {
         width: 35%;
         border-radius: 16px;
         overflow: hidden;
       }
-
       .image img {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
 
-      .content-section {
-        display: none;
-      }
-
-      .content-section.active {
-        display: block;
-      }
-
       h2 {
         color: #15803d;
         margin-bottom: 12px;
       }
-
-      p,
-      li {
-        font-size: 17px;
+      p {
+        font-size: 16px;
         line-height: 1.7;
+        margin-bottom: 10px;
       }
 
-      ul {
-        margin-left: 20px;
+      /* ===== BACK HOME ===== */
+      .back-home {
+        text-align: center;
+        margin: 20px 0;
+      }
+      .back-home a {
+        display: inline-block;
+        padding: 12px 22px;
+        background: #22c55e;
+        color: white;
+        text-decoration: none;
+        border-radius: 999px;
+        font-weight: bold;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        transition: 0.3s;
+      }
+      .back-home a:hover {
+        transform: translateY(-4px);
+        background: #16a34a;
       }
 
       /* ===== FOOTER ===== */
-      .site-footer {
+      footer {
         background: #15803d;
         color: white;
-        margin-top: auto;
-      }
-
-      .footer-inner {
-        max-width: 1200px;
-        margin: auto;
-        padding: 20px;
         text-align: center;
+        padding: 20px;
       }
 
-      .footer-sub {
-        margin-top: 6px;
-        font-size: 14px;
-        opacity: 0.85;
-      }
-
-      /* ===== MOBILE ===== */
+      /* ===== MOBILE CONTENT ===== */
       @media (max-width: 768px) {
         .container {
           flex-direction: column;
         }
-
         .menu {
           display: none;
         }
-
         .content {
           width: 100%;
           flex-direction: column;
         }
-
         .text,
         .image {
           width: 100%;
         }
-      }
-
-      @media (max-width: 600px) {
-        .footer-inner {
-          padding: 16px 12px;
-        }
-
-        .footer-inner p {
-          font-size: 14px;
-          line-height: 1.6;
-        }
-
-        .footer-sub {
-          font-size: 13px;
+        .image {
+          max-height: 220px;
         }
       }
     </style>
@@ -226,13 +221,14 @@
 
   <body>
     <header>
-      <h1>🌱 BẢO VỆ MÔI TRƯỜNG</h1>
+      <h1
+        data-vi="🌱 BẢO VỆ MÔI TRƯỜNG"
+        data-en="🌱 ENVIRONMENTAL PROTECTION"
+      ></h1>
       <p
         data-vi="Hiểu đúng – Hành động đúng – Vì tương lai"
-        data-en="Understand – Act – For the Future"
-      >
-        Hiểu đúng – Hành động đúng – Vì tương lai
-      </p>
+        data-en="Understand correctly – Act correctly – For the future"
+      ></p>
 
       <div class="lang-switch">
         <button onclick="setLang('vi')">🇻🇳 VI</button>
@@ -240,81 +236,118 @@
       </div>
     </header>
 
+    <div class="mobile-menu">
+      <button class="active" onclick="showContent(0)">🌍 Intro</button>
+      <button onclick="showContent(1)">⚠️ Status</button>
+      <button onclick="showContent(2)">💥 Impact</button>
+      <button onclick="showContent(3)">🌱 Why</button>
+      <button onclick="showContent(4)">🤝 Action</button>
+      <button onclick="showContent(5)">🏆 End</button>
+    </div>
+
     <main class="container">
       <aside class="menu">
-        <button class="active" onclick="showContent(0)">
-          🌍 Môi trường là gì?
-        </button>
-        <button onclick="showContent(1)">⚠️ Thực trạng</button>
-        <button onclick="showContent(2)">💥 Hậu quả</button>
-        <button onclick="showContent(3)">🌱 Vì sao cần bảo vệ?</button>
-        <button onclick="showContent(4)">🤝 Chúng ta cần làm gì?</button>
-        <button onclick="showContent(5)">🏆 Kết luận – Kêu gọi</button>
-        <div class="back-home">
-          <a href="index.html">⬅️ Trở về trang chủ</a>
-        </div>
+        <button
+          class="active"
+          onclick="showContent(0)"
+          data-vi="🌍 Môi trường là gì?"
+          data-en="🌍 What is environment?"
+        ></button>
+        <button
+          onclick="showContent(1)"
+          data-vi="⚠️ Thực trạng"
+          data-en="⚠️ Current status"
+        ></button>
+        <button
+          onclick="showContent(2)"
+          data-vi="💥 Hậu quả"
+          data-en="💥 Consequences"
+        ></button>
+        <button
+          onclick="showContent(3)"
+          data-vi="🌱 Vì sao cần bảo vệ?"
+          data-en="🌱 Why protect?"
+        ></button>
+        <button
+          onclick="showContent(4)"
+          data-vi="🤝 Chúng ta cần làm gì?"
+          data-en="🤝 What should we do?"
+        ></button>
+        <button
+          onclick="showContent(5)"
+          data-vi="🏆 Kết luận"
+          data-en="🏆 Conclusion"
+        ></button>
       </aside>
 
       <section class="content">
         <div class="text">
-          <div class="content-section active">
+          <div
+            class="content-section active"
+            data-vi="Môi trường bao gồm không khí, nước, đất, sinh vật và các yếu tố nhân tạo. Đây là không gian sống trực tiếp của con người và mọi sinh vật trên Trái Đất. Nếu môi trường bị ô nhiễm, chất lượng cuộc sống sẽ suy giảm nghiêm trọng."
+            data-en="The environment includes air, water, soil, organisms and man-made factors. It is the living space of humans and all creatures. Environmental pollution directly reduces quality of life."
+          >
             <h2>🌍 Môi trường là gì?</h2>
-            <p>
-              Môi trường là tất cả những yếu tố tự nhiên và nhân tạo bao quanh
-              con người.
-            </p>
+            <p></p>
           </div>
 
-          <div class="content-section">
+          <div
+            class="content-section"
+            data-vi="Hiện nay môi trường đang chịu nhiều áp lực từ hoạt động của con người như khói bụi công nghiệp, rác thải nhựa và ô nhiễm nguồn nước. Những vấn đề này ngày càng gia tăng."
+            data-en="Currently, the environment is under pressure from industrial emissions, plastic waste and water pollution. These problems are increasing rapidly."
+          >
             <h2>⚠️ Thực trạng môi trường</h2>
-            <ul>
-              <li>Ô nhiễm không khí</li>
-              <li>Ô nhiễm nguồn nước</li>
-              <li>Rác thải nhựa</li>
-            </ul>
+            <p></p>
           </div>
 
-          <div class="content-section">
+          <div
+            class="content-section"
+            data-vi="Ô nhiễm môi trường gây ra nhiều hậu quả nghiêm trọng như bệnh tật, biến đổi khí hậu, thiên tai và suy giảm đa dạng sinh học. Con người là đối tượng chịu ảnh hưởng trực tiếp."
+            data-en="Environmental pollution causes serious consequences such as diseases, climate change, disasters and biodiversity loss. Humans are directly affected."
+          >
             <h2>💥 Hậu quả</h2>
-            <ul>
-              <li>Ảnh hưởng sức khỏe</li>
-              <li>Mất đa dạng sinh học</li>
-              <li>Biến đổi khí hậu</li>
-            </ul>
+            <p></p>
           </div>
 
-          <div class="content-section">
+          <div
+            class="content-section"
+            data-vi="Bảo vệ môi trường chính là bảo vệ cuộc sống của chính chúng ta và thế hệ tương lai. Một môi trường trong lành giúp con người khỏe mạnh và phát triển bền vững."
+            data-en="Protecting the environment means protecting ourselves and future generations. A clean environment supports healthy and sustainable development."
+          >
             <h2>🌱 Vì sao cần bảo vệ?</h2>
-            <p>Bảo vệ môi trường là bảo vệ chính chúng ta.</p>
+            <p></p>
           </div>
 
-          <div class="content-section">
+          <div
+            class="content-section"
+            data-vi="Mỗi người cần có ý thức không xả rác, tiết kiệm tài nguyên, trồng cây xanh và lan tỏa lối sống xanh trong cộng đồng."
+            data-en="Everyone should avoid littering, save resources, plant trees and spread a green lifestyle in the community."
+          >
             <h2>🤝 Chúng ta cần làm gì?</h2>
-            <ul>
-              <li>Không xả rác</li>
-              <li>Tiết kiệm tài nguyên</li>
-              <li>Lan tỏa ý thức</li>
-            </ul>
+            <p></p>
           </div>
 
-          <div class="content-section">
-            <h2>🏆 Kết luận – Kêu gọi</h2>
-            <p>Mỗi hành động nhỏ đều tạo nên tương lai xanh.</p>
+          <div
+            class="content-section"
+            data-vi="Hãy hành động ngay hôm nay vì một Trái Đất xanh – sạch – đẹp. Mỗi hành động nhỏ đều tạo nên sự thay đổi lớn."
+            data-en="Act today for a green, clean and beautiful Earth. Small actions create big changes."
+          >
+            <h2>🏆 Kết luận</h2>
+            <p></p>
           </div>
         </div>
 
         <div class="image">
-          <img id="img" src="images/environment.jpg" alt="Environment" />
+          <img id="img" src="images/environment.jpg" />
         </div>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <div class="footer-inner">
-        <p>© 2026 | Website bảo vệ môi trường 🌱</p>
-        <p class="footer-sub">Chung tay vì một Trái Đất xanh – sạch – đẹp</p>
-      </div>
-    </footer>
+    <div class="back-home">
+      <a href="index.html">⬅️ Quay về Trang chủ</a>
+    </div>
+
+    <footer>© 2026 | Website Bảo vệ Môi trường 🌱</footer>
 
     <script>
       const images = [
@@ -326,26 +359,40 @@
         "images/conclusion.jpg",
       ];
 
+      let lang = localStorage.getItem("lang") || "vi";
+
+      function setLang(l) {
+        lang = l;
+        localStorage.setItem("lang", l);
+        document.querySelectorAll("[data-vi]").forEach((e) => {
+          e.innerText = e.getAttribute("data-" + l);
+        });
+        document.querySelectorAll(".content-section").forEach((s) => {
+          s.querySelector("p").innerText = s.getAttribute("data-" + l);
+        });
+      }
+
       function showContent(i) {
         document
-          .querySelectorAll(".menu button")
+          .querySelectorAll(".menu button,.mobile-menu button")
           .forEach((b) => b.classList.remove("active"));
         document
           .querySelectorAll(".content-section")
           .forEach((c) => c.classList.remove("active"));
-        document.querySelectorAll(".menu button")[i].classList.add("active");
+
+        document.querySelectorAll(".menu button")[i]?.classList.add("active");
         document
-          .querySelectorAll(".content-section")
-          [i].classList.add("active");
+          .querySelectorAll(".mobile-menu button")
+          [i]?.classList.add("active");
+
+        const sec = document.querySelectorAll(".content-section")[i];
+        sec.classList.add("active");
+        sec.querySelector("p").innerText = sec.getAttribute("data-" + lang);
+
         document.getElementById("img").src = images[i];
       }
 
-      function setLang(lang) {
-        document.querySelectorAll("[data-vi]").forEach((el) => {
-          el.innerText = el.getAttribute("data-" + lang);
-        });
-      }
+      setLang(lang);
     </script>
   </body>
 </html>
-

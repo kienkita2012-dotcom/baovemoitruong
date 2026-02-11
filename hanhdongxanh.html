@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hành Động Xanh | Green Action</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        background: #e6f4ea;
+        color: #064e3b;
+        overflow-x: hidden;
+      }
+
+      /* PARALLAX BACKGROUND */
+      .parallax {
+        position: fixed;
+        inset: 0;
+        background: url("https://images.unsplash.com/photo-1501785888041-af3ef285b470")
+          center/cover no-repeat;
+        z-index: -3;
+        transform: translateZ(0);
+      }
+      .parallax::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          rgba(0, 80, 40, 0.6),
+          rgba(0, 120, 60, 0.6)
+        );
+        backdrop-filter: blur(6px);
+      }
+
+      /* LIGHT EFFECT */
+      .light {
+        position: fixed;
+        top: 0;
+        left: -50%;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(
+          120deg,
+          transparent 40%,
+          rgba(255, 255, 255, 0.2),
+          transparent 60%
+        );
+        animation: shine 8s linear infinite;
+        z-index: -2;
+      }
+      @keyframes shine {
+        0% {
+          transform: translateX(-50%);
+        }
+        100% {
+          transform: translateX(50%);
+        }
+      }
+
+      /* HEADER */
+      header {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        color: white;
+        position: relative;
+      }
+      header h1 {
+        font-size: 48px;
+        font-weight: 700;
+        animation: fadeUp 1.2s ease forwards;
+      }
+      header p {
+        margin-top: 20px;
+        max-width: 700px;
+        font-size: 18px;
+        animation: fadeUp 1.8s ease forwards;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .lang {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+      }
+      .lang button {
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: none;
+        cursor: pointer;
+        margin-left: 8px;
+        font-weight: 600;
+      }
+
+      /* SECTION */
+      section {
+        padding: 80px 20px;
+        max-width: 1100px;
+        margin: auto;
+      }
+
+      /* ACTION CARDS */
+      .action {
+        display: flex;
+        gap: 40px;
+        align-items: center;
+        margin-bottom: 100px;
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 1s ease;
+      }
+      .action.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .action:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+
+      .action img {
+        width: 350px;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      }
+
+      .action-content {
+        background: white;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+        transition: 0.4s;
+      }
+      .action-content:hover {
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      }
+
+      .action-content h2 {
+        margin-bottom: 20px;
+      }
+
+      .stat {
+        font-size: 32px;
+        font-weight: 700;
+        color: #15803d;
+        margin-top: 20px;
+      }
+
+      /* LINKS SLIDER */
+      .links {
+        margin-top: 40px;
+        overflow-x: auto;
+        display: flex;
+        gap: 20px;
+        scroll-behavior: smooth;
+      }
+      .link-card {
+        min-width: 220px;
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        cursor: pointer;
+        transition: 0.3s;
+        text-align: center;
+      }
+      .link-card:hover {
+        transform: scale(1.1);
+      }
+
+      /* POPUP CENTER */
+      .popup-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(8px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: 0.4s;
+      }
+      .popup-overlay.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+      .popup {
+        background: white;
+        width: 90%;
+        max-width: 500px;
+        padding: 40px;
+        border-radius: 20px;
+        animation: popIn 0.4s ease;
+        position: relative;
+      }
+      @keyframes popIn {
+        from {
+          transform: scale(0.8);
+          opacity: 0;
+        }
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+      .popup button {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        border: none;
+        background: none;
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      /* BACK HOME */
+      .back {
+        text-align: center;
+        margin: 60px 0;
+      }
+      .back a {
+        background: #15803d;
+        color: white;
+        padding: 12px 25px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      /* MOBILE */
+      @media (max-width: 768px) {
+        .action {
+          flex-direction: column !important;
+        }
+        .action img {
+          width: 100%;
+        }
+        header h1 {
+          font-size: 32px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="parallax"></div>
+    <div class="light"></div>
+
+    <header>
+      <div class="lang">
+        <button onclick="setLang('vi')">VI</button>
+        <button onclick="setLang('en')">EN</button>
+      </div>
+
+      <h1
+        data-vi="🌍 Hành Động Xanh Vì Tương Lai"
+        data-en="🌍 Green Actions For The Future"
+      ></h1>
+
+      <p
+        data-vi="Bảo vệ môi trường không còn là lựa chọn mà là trách nhiệm chung của toàn nhân loại. Dưới đây là những hành động phổ biến và thiết thực nhất đang được áp dụng trên toàn thế giới."
+        data-en="Protecting the environment is no longer an option but a shared responsibility. Below are the most common and practical actions being implemented worldwide."
+      ></p>
+    </header>
+
+    <section>
+      <!-- ACTION 1 -->
+      <div class="action">
+        <img
+          src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6"
+        />
+        <div class="action-content">
+          <h2
+            data-vi="🌱 Trồng Cây & Phục Hồi Rừng"
+            data-en="🌱 Tree Planting & Forest Restoration"
+          ></h2>
+
+          <p
+            data-vi="Rừng hấp thụ CO2, giảm hiệu ứng nhà kính và bảo vệ hệ sinh thái. Các chương trình trồng cây đang được triển khai mạnh mẽ nhằm khôi phục diện tích rừng bị suy giảm."
+            data-en="Forests absorb CO2, reduce greenhouse effects and protect ecosystems. Massive tree-planting campaigns aim to restore degraded forests."
+          ></p>
+
+          <div class="stat" data-count="30">0%</div>
+
+          <div class="links">
+            <div class="link-card" onclick="openPopup('WWF')">WWF</div>
+            <div class="link-card" onclick="openPopup('Greenpeace')">
+              Greenpeace
+            </div>
+            <div class="link-card" onclick="openPopup('UNEP')">UNEP</div>
+            <div class="link-card" onclick="openPopup('350.org')">350.org</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTION 2 -->
+      <div class="action">
+        <img
+          src="https://images.unsplash.com/photo-1473341304170-971dccb5ac1e"
+        />
+        <div class="action-content">
+          <h2
+            data-vi="♻ Giảm Rác Thải Nhựa"
+            data-en="♻ Reduce Plastic Waste"
+          ></h2>
+
+          <p
+            data-vi="Hơn 8 triệu tấn nhựa đổ ra đại dương mỗi năm. Việc tái chế và hạn chế sử dụng nhựa dùng một lần là giải pháp cấp bách."
+            data-en="Over 8 million tons of plastic enter oceans annually. Recycling and reducing single-use plastics are urgent solutions."
+          ></p>
+
+          <div class="stat" data-count="70">0%</div>
+        </div>
+      </div>
+
+      <!-- ACTION 3 -->
+      <div class="action">
+        <img
+          src="https://images.unsplash.com/photo-1509395176047-4a66953fd231"
+        />
+        <div class="action-content">
+          <h2
+            data-vi="⚡ Sử Dụng Năng Lượng Tái Tạo"
+            data-en="⚡ Renewable Energy Adoption"
+          ></h2>
+
+          <p
+            data-vi="Năng lượng mặt trời và gió giúp giảm phụ thuộc nhiên liệu hóa thạch, giảm phát thải khí nhà kính."
+            data-en="Solar and wind energy reduce fossil fuel dependence and greenhouse gas emissions."
+          ></p>
+
+          <div class="stat" data-count="50">0%</div>
+        </div>
+      </div>
+
+      <div class="back">
+        <a
+          href="index.html"
+          data-vi="⬅ Quay lại Trang chủ"
+          data-en="⬅ Back to Home"
+        ></a>
+      </div>
+    </section>
+
+    <!-- POPUP -->
+    <div class="popup-overlay" id="popup">
+      <div class="popup">
+        <button onclick="closePopup()">✖</button>
+        <h2 id="popupTitle"></h2>
+        <p id="popupContent"></p>
+      </div>
+    </div>
+
+    <script>
+      function setLang(lang) {
+        localStorage.setItem("lang", lang);
+        document.querySelectorAll("[data-vi]").forEach((el) => {
+          el.innerText = el.getAttribute("data-" + lang);
+        });
+      }
+      window.onload = () => setLang(localStorage.getItem("lang") || "vi");
+
+      /* Scroll reveal */
+      const actions = document.querySelectorAll(".action");
+      window.addEventListener("scroll", () => {
+        actions.forEach((a) => {
+          if (a.getBoundingClientRect().top < window.innerHeight - 100) {
+            a.classList.add("show");
+          }
+        });
+      });
+
+      /* Counter */
+      const counters = document.querySelectorAll(".stat");
+      window.addEventListener("scroll", () => {
+        counters.forEach((counter) => {
+          const top = counter.getBoundingClientRect().top;
+          if (top < window.innerHeight) {
+            let target = +counter.getAttribute("data-count");
+            let count = 0;
+            let interval = setInterval(() => {
+              if (count >= target) {
+                clearInterval(interval);
+              } else {
+                count++;
+                counter.innerText = count + "%";
+              }
+            }, 20);
+          }
+        });
+      });
+
+      /* Popup */
+      function openPopup(name) {
+        document.getElementById("popup").classList.add("active");
+        document.getElementById("popupTitle").innerText = name;
+        document.getElementById("popupContent").innerText =
+          "Tổ chức bảo vệ môi trường toàn cầu hoạt động mạnh mẽ vì khí hậu và sinh thái.";
+      }
+      function closePopup() {
+        document.getElementById("popup").classList.remove("active");
+      }
+    </script>
+  </body>
+</html>
